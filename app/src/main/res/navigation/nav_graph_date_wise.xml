@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_date_wise"
+    app:startDestination="@id/date_wise_dest">
+
+    <fragment
+        android:id="@+id/date_wise_dest"
+        android:name="com.example.weatherapp.ui.fragments.DateWiseFragment"
+        android:label="Date Wise Weather"
+        tools:layout="@layout/fragment_date_wise" />
+
+</navigation>

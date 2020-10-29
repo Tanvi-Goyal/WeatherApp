@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_graph_current"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_graph_date_wise"
+        android:title="Weather" />
+
+    <item
+        android:id="@+id/nav_graph_seven_days"
+        android:title="7 Days Weather" />
+</menu>
