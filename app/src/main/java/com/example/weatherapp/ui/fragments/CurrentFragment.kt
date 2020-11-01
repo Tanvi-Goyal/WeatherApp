@@ -36,7 +36,7 @@ class CurrentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setViewModelObservers()
-        binding.text.text = preferences.getString("username", "")
+//        binding.text.text = preferences.getString("username", "")
     }
 
     private fun setViewModelObservers() {
