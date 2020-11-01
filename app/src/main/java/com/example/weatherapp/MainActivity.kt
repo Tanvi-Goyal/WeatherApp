@@ -1,6 +1,7 @@
 package com.example.weatherapp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.PackageManager
 import android.location.Location
@@ -12,6 +13,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -24,7 +26,11 @@ import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.utils.setupWithNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(){
 
     private var currentNavController: LiveData<NavController>? = null
@@ -32,6 +38,9 @@ class MainActivity : AppCompatActivity(){
 
     private var fusedLocationClient: FusedLocationProviderClient? = null
     private var lastLocation: Location? = null
+
+    private var PRIVATE_MODE = 0
+    private val PREF_NAME = "user_name"
 
     companion object {
         private const val TAG = "LocationProvider"
@@ -43,6 +52,22 @@ class MainActivity : AppCompatActivity(){
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        }
+//        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+//        if (sharedPref.getString(PREF_NAME, "")) {
+//            val homeIntent = Intent(this, HomeActivity::class.java)
+//            startActivity(homeIntent)
+//            finish()
+//        } else {
+//            setContentView(R.layout.activity_main)
+//            setViewPager()
+//            val editor = sharedPref.edit()
+//            editor.putString(PREF_NAME, "")
+//            editor.apply()
+//        }
     }
 
     override fun onStart() {
@@ -74,26 +99,18 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun showDialog() {
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_username, null)
-        val mBuilder = AlertDialog.Builder(this)
-            .setView(mDialogView)
-            .setTitle("Set Username")
-        val  mAlertDialog = mBuilder.show()
-        mDialogView.setOnClickListener {
-            //dismiss dialog
-            mAlertDialog.dismiss()
-            //get text from EditTexts of custom layout
-//            val name = mDialogView.text.toString()
-//            val email = mDialogView.dialogEmailEt.text.toString()
-//            val password = mDialogView.dialogPasswEt.text.toString()
-//            //set the input text in TextView
-//            mainInfoTv.setText("Name:"+ name +"\nEmail: "+ email +"\nPassword: "+ password)
-        }
-        //cancel button click of custom layout
-//        mDialogView.dialogCancelBtn.setOnClickListener {
-//            //dismiss dialog
-//            mAlertDialog.dismiss()
-//        }
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_username, null, false)
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
+        val usernameField = mDialogView.findViewById<TextInputLayout>(R.id.text_username)
+
+        materialAlertDialogBuilder.setView(mDialogView)
+            .setTitle("Details")
+            .setPositiveButton("OKAY") { dialog, _ ->
+                val username = usernameField.editText?.text.toString()
+
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun showMessage(string: String) {

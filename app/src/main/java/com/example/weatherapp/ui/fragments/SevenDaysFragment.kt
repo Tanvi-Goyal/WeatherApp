@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentSevenDaysBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SevenDaysFragment : Fragment() {
 
     private lateinit var binding : FragmentSevenDaysBinding
