@@ -8,6 +8,6 @@ class WeatherViewModel @ViewModelInject constructor(
     private val repository: WeatherRepository
 ) : ViewModel() {
 
-    fun getCurrentWeather(lat: String, lon: String) =
-        repository.getCurrentWeather(lat, lon)
+    fun getWeatherData(lat: String, lon: String) =
+        repository.getWeatherData(lat, lon)
 }

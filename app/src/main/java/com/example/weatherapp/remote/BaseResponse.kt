@@ -1,11 +1,11 @@
 package com.example.weatherapp.remote
 
-import com.example.weatherapp.model.CurrentWeatherResponse
+import com.example.weatherapp.model.WeatherResponse
 import retrofit2.Response
 
 abstract class BaseResponse {
 
-    protected suspend fun getApiResponse(call: suspend () -> Response<CurrentWeatherResponse>): Resource<CurrentWeatherResponse> {
+    protected suspend fun getApiResponse(call: suspend () -> Response<WeatherResponse>): Resource<WeatherResponse> {
         try {
             val response = call.invoke()
 

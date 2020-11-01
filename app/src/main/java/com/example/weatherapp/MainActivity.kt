@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(){
@@ -39,8 +40,8 @@ class MainActivity : AppCompatActivity(){
     private var fusedLocationClient: FusedLocationProviderClient? = null
     private var lastLocation: Location? = null
 
-    private var PRIVATE_MODE = 0
-    private val PREF_NAME = "user_name"
+    @Inject
+    lateinit var preferences : SharedPreferences
 
     companion object {
         private const val TAG = "LocationProvider"
@@ -53,21 +54,9 @@ class MainActivity : AppCompatActivity(){
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && !preferences.getString("username", "").isNullOrEmpty()) {
             setupBottomNavigationBar()
         }
-//        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-//        if (sharedPref.getString(PREF_NAME, "")) {
-//            val homeIntent = Intent(this, HomeActivity::class.java)
-//            startActivity(homeIntent)
-//            finish()
-//        } else {
-//            setContentView(R.layout.activity_main)
-//            setViewPager()
-//            val editor = sharedPref.edit()
-//            editor.putString(PREF_NAME, "")
-//            editor.apply()
-//        }
     }
 
     override fun onStart() {
@@ -89,7 +78,9 @@ class MainActivity : AppCompatActivity(){
                 Log.wtf(TAG, "Latitude :" + (lastLocation)!!.latitude)
                 Log.wtf(TAG, "Longitude :" + (lastLocation)!!.longitude)
 
-                showDialog()
+                if(preferences.getString("username", "").isNullOrEmpty()) {
+                    showDialog()
+                }
             }
             else {
                 Log.w(TAG, "getLastLocation:exception", task.exception)
@@ -104,12 +95,15 @@ class MainActivity : AppCompatActivity(){
         val usernameField = mDialogView.findViewById<TextInputLayout>(R.id.text_username)
 
         materialAlertDialogBuilder.setView(mDialogView)
-            .setTitle("Details")
-            .setPositiveButton("OKAY") { dialog, _ ->
+            .setTitle("Set Username")
+            .setPositiveButton("Submit") { dialog, _ ->
                 val username = usernameField.editText?.text.toString()
 
+                preferences.edit().putString("username", username).apply()
+                setupBottomNavigationBar()
                 dialog.dismiss()
             }
+            .setCancelable(false)
             .show()
     }
 
