@@ -12,4 +12,11 @@ interface WeatherAPI {
         @Query("lat") latitude: String,
         @Query("lon") longitude: String
     ): Response<WeatherResponse>
+
+    @GET(ApiConstants.WEATHER_DATE_URL)
+    suspend fun getWeatherDataByDate(
+        @Query("lat") latitude: String,
+        @Query("lon") longitude: String,
+        @Query("dt") date: String
+    ): Response<WeatherResponse>
 }

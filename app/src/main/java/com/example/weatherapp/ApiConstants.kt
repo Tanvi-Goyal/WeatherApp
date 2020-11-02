@@ -6,4 +6,5 @@ object ApiConstants {
     const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
     const val WEATHER_URL = "onecall"
+    const val WEATHER_DATE_URL = "onecall/timemachine"
 }

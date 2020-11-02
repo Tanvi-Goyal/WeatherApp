@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_seven_days"
+    app:startDestination="@id/seven_days_dest">
+
+    <fragment
+        android:id="@+id/seven_days_dest"
+        android:name="com.example.weatherapp.ui.fragments.SevenDaysFragment"
+        android:label="7 Days Weather"
+        tools:layout="@layout/fragment_seven_days" />
+
+</navigation>

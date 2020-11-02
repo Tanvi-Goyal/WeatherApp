@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.weatherapp.databinding.FragmentCurrentBinding
+import com.example.weatherapp.model.WeatherResponse
 import com.example.weatherapp.remote.Resource
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,7 @@ class CurrentFragment : Fragment() {
 
     private lateinit var binding: FragmentCurrentBinding
     private val viewModel: WeatherViewModel by viewModels()
+    private lateinit var data : WeatherResponse
 
     @Inject
     lateinit var preferences: SharedPreferences
@@ -36,7 +38,6 @@ class CurrentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setViewModelObservers()
-//        binding.text.text = preferences.getString("username", "")
     }
 
     private fun setViewModelObservers() {
@@ -45,6 +46,7 @@ class CurrentFragment : Fragment() {
                 when (response.status) {
                     Resource.Status.SUCCESS -> {
                         Log.wtf("response", response.data.toString())
+                        data = response.data!!
                     }
                     Resource.Status.ERROR -> {
                     }

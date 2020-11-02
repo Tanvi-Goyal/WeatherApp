@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.weatherapp.Converters
 import com.example.weatherapp.databinding.ItemDaysBinding
 import com.example.weatherapp.model.WeatherResponse
 
@@ -32,15 +31,15 @@ class InfoAdapter() : RecyclerView.Adapter<InfoAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(private val itemHeadlineBinding: ItemDaysBinding) : RecyclerView.ViewHolder(
-        itemHeadlineBinding.root
+    class MyViewHolder(private val itemDaysBinding: ItemDaysBinding) : RecyclerView.ViewHolder(
+        itemDaysBinding.root
     ) {
         fun bind(weatherItem: WeatherResponse.Daily) {
-            itemHeadlineBinding.day.text = weatherItem.dt.toString()
-            itemHeadlineBinding.textTemperature.text = weatherItem.weather[0].main
-            Glide.with(itemHeadlineBinding.root)
-                .load(weatherItem.weather[0].icon)
-                .into(itemHeadlineBinding.imgTemperature)
+            itemDaysBinding.day.text = weatherItem.dt.toString()
+            itemDaysBinding.textTemperature.text = weatherItem.weather[0].main
+            Glide.with(itemDaysBinding.root)
+                .load("http://openweathermap.org/img/wn/" + weatherItem.weather[0].icon + ".png")
+                .into(itemDaysBinding.imgTemperature)
         }
     }
 }

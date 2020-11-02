@@ -28,4 +28,19 @@ class WeatherRepository @Inject constructor(
             emit(Resource.error(it))
         }
     }
+
+    fun getWeatherByDate(lat: String, lon: String, date: String): LiveData<Resource<WeatherResponse>> = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+
+        val response = suspend { getApiResponse { weatherApi.getWeatherDataByDate(lat, lon, date) } }.invoke()
+
+        if (response.status == Resource.Status.SUCCESS) {
+            Resource.success(response.data)
+            emit(response)
+        }
+
+        response.message?.let {
+            emit(Resource.error(it))
+        }
+    }
 }

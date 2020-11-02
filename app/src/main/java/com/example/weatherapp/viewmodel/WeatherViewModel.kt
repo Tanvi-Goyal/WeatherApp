@@ -10,4 +10,11 @@ class WeatherViewModel @ViewModelInject constructor(
 
     fun getWeatherData(lat: String, lon: String) =
         repository.getWeatherData(lat, lon)
+
+    fun getWeatherByDate(lat: String, lon: String, date: String) =
+        repository.getWeatherByDate(lat, lon, getConvertedDate(date))
+
+    private fun getConvertedDate(date: String): String {
+        return ""
+    }
 }

@@ -17,4 +17,13 @@
     <string name="stop_location_updates_button_text">Stop receiving location updates</string>
 
     <string name="location_updated">Location Updated: %1$s</string>
+    <string name="select_city">Select City</string>
+    <string name="select_date">Select Date</string>
+
+    <string-array name="cities">
+        <item>Delhi</item>
+        <item>Mumbai</item>
+        <item>Noida</item>
+    </string-array>
+
 </resources>
