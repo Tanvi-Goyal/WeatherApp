@@ -19,6 +19,7 @@
     <string name="location_updated">Location Updated: %1$s</string>
     <string name="select_city">Select City</string>
     <string name="select_date">Select Date</string>
+    <string name="change_temperature_type">Change Temperature Type</string>
 
     <string-array name="cities">
         <item>Delhi</item>

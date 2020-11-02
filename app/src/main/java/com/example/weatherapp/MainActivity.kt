@@ -1,27 +1,23 @@
 package com.example.weatherapp
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.*
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.utils.setupWithNavController
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -32,16 +28,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private var currentNavController: LiveData<NavController>? = null
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private var fusedLocationClient: FusedLocationProviderClient? = null
     private var lastLocation: Location? = null
 
     @Inject
-    lateinit var preferences : SharedPreferences
+    lateinit var preferences: SharedPreferences
 
     companion object {
         private const val TAG = "LocationProvider"
@@ -54,9 +50,10 @@ class MainActivity : AppCompatActivity(){
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        setupBottomNavigationBar()
-        if (savedInstanceState == null && !preferences.getString("username", "").isNullOrEmpty()) {
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
         }
+        binding.welcomeText.text = "Welcome " + preferences.getString("username", "")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -66,7 +63,12 @@ class MainActivity : AppCompatActivity(){
 
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = binding.bottomNav
-        val navGraphIds = listOf(R.navigation.nav_graph_current, R.navigation.nav_graph_date_wise, R.navigation.nav_graph_seven_days)
+        val navGraphIds = listOf(
+            R.navigation.nav_graph_current,
+            R.navigation.nav_graph_date_wise,
+            R.navigation.nav_graph_seven_days,
+            R.navigation.nav_graph_settings
+        )
 
         val controller = bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
@@ -75,9 +77,6 @@ class MainActivity : AppCompatActivity(){
             intent = intent
         )
 
-//        controller.observe(this, Observer { navController ->
-//            setupActionBarWithNavController(navController)
-//        })
         currentNavController = controller
     }
 
@@ -91,8 +90,7 @@ class MainActivity : AppCompatActivity(){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions()
             }
-        }
-        else {
+        } else {
             getLastLocation()
         }
     }
@@ -101,14 +99,17 @@ class MainActivity : AppCompatActivity(){
         fusedLocationClient?.lastLocation!!.addOnCompleteListener(this) { task ->
             if (task.isSuccessful && task.result != null) {
                 lastLocation = task.result
-                Log.wtf(TAG, "Latitude :" + (lastLocation)!!.latitude)
-                Log.wtf(TAG, "Longitude :" + (lastLocation)!!.longitude)
 
-                if(preferences.getString("username", "").isNullOrEmpty()) {
+                preferences.edit().putString("latitude", lastLocation!!.latitude.toString()).apply()
+                preferences.edit().putString("longitude", lastLocation!!.longitude.toString())
+                    .apply()
+
+                if (preferences.getString("username", "").isNullOrEmpty()) {
                     showDialog()
+                } else {
+                    binding.welcomeText.text = "Welcome " + preferences.getString("username", "")
                 }
-            }
-            else {
+            } else {
                 Log.w(TAG, "getLastLocation:exception", task.exception)
                 showMessage("No location detected. Make sure location is enabled on the device.")
             }
@@ -126,6 +127,7 @@ class MainActivity : AppCompatActivity(){
                 val username = usernameField.editText?.text.toString()
 
                 preferences.edit().putString("username", username).apply()
+                binding.welcomeText.text = "Welcome $username"
                 setupBottomNavigationBar()
                 dialog.dismiss()
             }
@@ -134,10 +136,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun showMessage(string: String) {
-//        val container = findViewById<View>(R.id.linearLayout)
-//        if (container != null) {
-//            Toast.makeText(this@MainActivity, string, Toast.LENGTH_LONG).show()
-//        }
+        Toast.makeText(this@MainActivity, string, Toast.LENGTH_LONG).show()
     }
 
     private fun showSnackbar(
@@ -174,8 +173,7 @@ class MainActivity : AppCompatActivity(){
                 View.OnClickListener {
                     startLocationPermissionRequest()
                 })
-        }
-        else {
+        } else {
             Log.i(TAG, "Requesting permission")
             startLocationPermissionRequest()
         }

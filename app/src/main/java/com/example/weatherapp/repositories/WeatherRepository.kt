@@ -2,8 +2,7 @@ package com.example.weatherapp.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.example.weatherapp.WeatherAPI
-import com.example.weatherapp.model.CurrentWeatherResponse
+import com.example.weatherapp.service.WeatherAPI
 import com.example.weatherapp.model.WeatherResponse
 import com.example.weatherapp.remote.BaseResponse
 import com.example.weatherapp.remote.Resource

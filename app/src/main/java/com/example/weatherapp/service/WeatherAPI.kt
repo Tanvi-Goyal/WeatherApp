@@ -1,6 +1,7 @@
-package com.example.weatherapp
+package com.example.weatherapp.service
 
 import com.example.weatherapp.model.WeatherResponse
+import com.example.weatherapp.utils.ApiConstants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

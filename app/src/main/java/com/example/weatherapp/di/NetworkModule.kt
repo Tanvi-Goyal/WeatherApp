@@ -1,7 +1,7 @@
 package com.example.weatherapp.di
 
-import com.example.weatherapp.ApiConstants
-import com.example.weatherapp.WeatherAPI
+import com.example.weatherapp.utils.ApiConstants
+import com.example.weatherapp.service.WeatherAPI
 import com.example.weatherapp.repositories.WeatherRepository
 import dagger.Module
 import dagger.Provides
@@ -57,7 +57,8 @@ object NetworkModule {
     }
 
     @Provides
-    fun providesNewsApi(retrofit: Retrofit): WeatherAPI = retrofit.create(WeatherAPI::class.java)
+    fun providesNewsApi(retrofit: Retrofit): WeatherAPI = retrofit.create(
+        WeatherAPI::class.java)
 
     @Singleton
     @Provides

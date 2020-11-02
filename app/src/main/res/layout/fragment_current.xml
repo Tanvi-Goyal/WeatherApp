@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_location"
             android:gravity="bottom"
-            android:text="Sant Nagar"
+            tools:text="Sant Nagar"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold"
@@ -28,9 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_4sdp"
-            android:text="Sun, 1 November, 2020"
+            tools:text="Sun, 1 November, 2020"
             android:textColor="@color/grey"
             android:textSize="@dimen/_9sdp"
+            android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/locationName" />
 
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="19"
+            tools:text="19"
             android:textColor="@color/black"
             android:textSize="@dimen/_40sdp"
             android:textStyle="bold"
@@ -52,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Sunny Day"
+            tools:text="Sunny Day"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTemperature" />
@@ -63,14 +64,16 @@
             android:layout_height="0dp"
             android:layout_marginRight="@dimen/_20sdp"
             android:src="@drawable/ic_uv"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/textTemperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/textTemperature" />
 
         <TextView
+            android:id="@+id/textFeelsLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feels Like 21"
+            tools:text="Feels Like 21"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@id/imgTemperature"
             app:layout_constraintTop_toBottomOf="@id/imgTemperature" />
@@ -85,35 +88,38 @@
             app:layout_constraintTop_toBottomOf="@id/weatherDescription">
 
             <TextView
+                android:id="@+id/sunrise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:drawableLeft="@drawable/ic_sunrise"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="bottom"
-                android:text="7:32 am"
+                tools:text="7:32 am"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
+                android:id="@+id/sunset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:drawableLeft="@drawable/ic_sunset"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="bottom"
-                android:text="7:32 pm"
+                tools:text="7:32 pm"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
+                android:id="@+id/wind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:drawableLeft="@drawable/ic_wind"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="bottom"
-                android:text="13 km/hr"
+                tools:text="13 km/hr"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
@@ -128,35 +134,38 @@
             app:layout_constraintTop_toBottomOf="@id/layout1">
 
             <TextView
+                android:id="@+id/humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:drawableLeft="@drawable/ic_humidity"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="bottom"
-                android:text="7:32 am"
+                tools:text="7:32 am"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
+                android:id="@+id/uv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:drawableLeft="@drawable/ic_uv"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="bottom"
-                android:text="7:32 pm"
+                tools:text="7:32 pm"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
+                android:id="@+id/rain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:drawableLeft="@drawable/ic_rain"
                 android:drawablePadding="@dimen/_4sdp"
                 android:gravity="bottom"
-                android:text="13 km/hr"
+                tools:text="13 km/hr"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
