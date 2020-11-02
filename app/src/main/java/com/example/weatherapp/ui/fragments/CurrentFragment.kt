@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.example.weatherapp.utils.Utils.Companion.getConvertedDate
 import com.example.weatherapp.databinding.FragmentCurrentBinding
 import com.example.weatherapp.model.WeatherResponse
 import com.example.weatherapp.remote.Resource
+import com.example.weatherapp.utils.Utils.Companion.getConvertedDate
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
@@ -60,17 +60,11 @@ class CurrentFragment : Fragment() {
             val addresses: List<Address>
             val geocoder = Geocoder(requireContext(), Locale.getDefault())
 
-//        addresses = geocoder.getFromLocation(
-//            preferences.getString("latitude", "").toString().toDouble(),
-//            preferences.getString("longitude", "").toString().toDouble(),
-//            1
-//        )
-
             addresses = geocoder.getFromLocation(
-                28.73,
-                77.20,
+                preferences.getString("latitude", "").toString().toDouble(),
+                preferences.getString("longitude", "").toString().toDouble(),
                 1
-            ) // H
+            )
 
             val address: String = addresses[0]
                 .getAddressLine(0)
@@ -119,7 +113,8 @@ class CurrentFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setViewModelObservers() {
-        viewModel.getWeatherData("28.73", "77.20")
+        viewModel.getWeatherData(preferences.getString("latitude", "").toString(),
+            preferences.getString("longitude", "").toString())
             .observe(viewLifecycleOwner, Observer { response ->
                 when (response.status) {
                     Resource.Status.SUCCESS -> {
@@ -135,13 +130,4 @@ class CurrentFragment : Fragment() {
                 }
             })
     }
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    fun getConvertedDate(timeStamp : Long): LocalDateTime {
-//        val secondApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-//        val timestampAsDateString = DateTimeFormatter.ISO_INSTANT
-//            .format(java.time.Instant.ofEpochSecond(timeStamp))
-//
-//        return LocalDateTime.parse(timestampAsDateString, secondApiFormat)
-//    }
 }

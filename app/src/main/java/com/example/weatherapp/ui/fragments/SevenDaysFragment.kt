@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.weatherapp.remote.Resource
 import com.example.weatherapp.ui.adapter.InfoAdapter
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SevenDaysFragment : Fragment() {
@@ -21,6 +23,9 @@ class SevenDaysFragment : Fragment() {
     private lateinit var binding: FragmentSevenDaysBinding
     private lateinit var infoAdapter: InfoAdapter
     private val viewModel: WeatherViewModel by viewModels()
+
+    @Inject
+    lateinit var preferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +49,8 @@ class SevenDaysFragment : Fragment() {
     }
 
     private fun setViewModelObservers() {
-        viewModel.getWeatherData("28.73", "77.20")
+        viewModel.getWeatherData(preferences.getString("latitude", "").toString(),
+            preferences.getString("longitude", "").toString())
             .observe(viewLifecycleOwner, Observer { response ->
                 when (response.status) {
                     Resource.Status.SUCCESS -> {
