@@ -42,7 +42,7 @@ class SettingsFragment : Fragment() {
                     val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                     preferences.edit()
                         .putString("temperature_type", temp[selectedPosition].toLowerCase()).apply()
-                    binding.temperature.text = selectedPosition.toString()
+                    binding.temperature.text = temp[selectedPosition]
                 }
                 .show()
         }

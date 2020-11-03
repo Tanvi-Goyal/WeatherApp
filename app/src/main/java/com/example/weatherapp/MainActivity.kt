@@ -12,7 +12,9 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -118,13 +120,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDialog() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_username, null, false)
-        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
-        val usernameField = mDialogView.findViewById<TextInputLayout>(R.id.text_username)
+        val materialAlertDialogBuilder = AlertDialog.Builder(this)
+        val usernameField = mDialogView.findViewById<EditText>(R.id.text_username)
 
         materialAlertDialogBuilder.setView(mDialogView)
             .setTitle("Set Username")
             .setPositiveButton("Submit") { dialog, _ ->
-                val username = usernameField.editText?.text.toString()
+                val username = usernameField.text.toString()
 
                 preferences.edit().putString("username", username).apply()
                 binding.welcomeText.text = "Welcome $username"

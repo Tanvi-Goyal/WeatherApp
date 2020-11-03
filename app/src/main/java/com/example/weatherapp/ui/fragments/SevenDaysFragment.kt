@@ -2,7 +2,6 @@ package com.example.weatherapp.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +42,7 @@ class SevenDaysFragment : Fragment() {
     }
 
     private fun setUpRecycler() {
-        infoAdapter = InfoAdapter()
+        infoAdapter = InfoAdapter(preferences)
         binding.recycler.layoutManager = LinearLayoutManager(context)
         binding.recycler.adapter = infoAdapter
     }

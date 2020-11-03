@@ -54,6 +54,7 @@ class CurrentFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setData() {
 
+        binding.layout.visibility = View.VISIBLE
         if (::data.isInitialized) {
             val current = data.current
 
